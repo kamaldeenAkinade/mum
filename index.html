@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Sweet Mum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ivory:    #faf6f0;
+  --cream:    #f0e6d2;
+  --ink:      #18120c;
+  --ink-soft: #2e2016;
+  --gold:     #a07820;
+  --gold-lt:  #c49830;
+  --wine:     #5c1f2e;
+  --serif:    'Cormorant', serif;
+  --sans:     'Jost', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--sans);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CURSOR ── */
+.cursor {
+  position: fixed; width: 10px; height: 10px;
+  background: var(--gold-lt); border-radius: 50%;
+  pointer-events: none; z-index: 99999;
+  transform: translate(-50%,-50%);
+}
+.cursor-ring {
+  position: fixed; width: 32px; height: 32px;
+  border: 1.5px solid rgba(160,120,32,0.4); border-radius: 50%;
+  pointer-events: none; z-index: 99998;
+  transform: translate(-50%,-50%);
+  transition: left .14s ease, top .14s ease;
+}
+@media (hover: none) { body { cursor: auto; } .cursor, .cursor-ring { display: none; } }
+
+/* ── DIVIDER ── */
+.divider {
+  display: flex; align-items: center; gap: 14px;
+  margin: 0 auto; max-width: 260px;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-lt), transparent);
+}
+.diamond { width: 7px; height: 7px; background: var(--gold-lt); transform: rotate(45deg); flex-shrink: 0; }
+
+/* ──────────────────────────────
+   HERO
+────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 80px 32px;
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(ellipse at 10% 10%, rgba(92,31,46,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 90%, rgba(58,80,64,0.07) 0%, transparent 55%),
+    var(--ivory);
+}
+.hero::before {
+  content: ''; position: absolute;
+  top: 28px; left: 28px; right: 28px; bottom: 28px;
+  border: 1px solid rgba(160,120,32,0.18);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: var(--sans); font-size: 11px;
+  letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 32px;
+  opacity: 0; animation: up .8s ease .3s forwards;
+}
+.hero-for {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(22px, 4vw, 30px); font-weight: 400;
+  color: var(--ink-soft); margin-bottom: 10px;
+  opacity: 0; animation: up .8s ease .5s forwards;
+}
+.hero-name {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(72px, 18vw, 130px);
+  color: var(--ink); line-height: 0.92;
+  opacity: 0; animation: up 1s ease .7s forwards;
+  margin-bottom: 6px;
+}
+.hero-name span { display: block; font-style: italic; color: var(--wine); }
+.hero-date {
+  font-family: var(--sans); font-size: 12px;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(24,18,12,0.5); margin-top: 28px; margin-bottom: 40px;
+  opacity: 0; animation: up .8s ease 1s forwards;
+}
+.hero-divider {
+  opacity: 0; animation: up .8s ease 1.2s forwards;
+  margin-bottom: 40px; width: 100%;
+}
+.hero-intro {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(20px, 3vw, 26px); font-weight: 400;
+  color: var(--ink-soft); line-height: 1.8; max-width: 580px;
+  opacity: 0; animation: up .8s ease 1.4s forwards;
+  margin-bottom: 60px;
+}
+.scroll-hint {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  opacity: 0; animation: up .8s ease 1.8s forwards;
+}
+.scroll-hint span {
+  font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(24,18,12,0.45);
+}
+.scroll-bar {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, var(--gold-lt), transparent);
+  animation: bounce 2s ease-in-out infinite;
+}
+@keyframes bounce { 0%,100% { transform: scaleY(1); opacity:.6; } 50% { transform: scaleY(1.4); opacity:1; } }
+
+/* ──────────────────────────────
+   TRIBUTE
+────────────────────────────── */
+.tribute {
+  padding: 96px 32px;
+  background:
+    radial-gradient(ellipse at 85% 40%, rgba(92,31,46,0.05) 0%, transparent 55%),
+    var(--ivory);
+}
+.tribute-inner { max-width: 760px; margin: 0 auto; text-align: center; }
+
+.section-eyebrow {
+  display: block; font-family: var(--sans);
+  font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 18px;
+}
+.section-title {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(38px, 7vw, 62px);
+  color: var(--ink); line-height: 1.12; margin-bottom: 40px;
+}
+.section-title em { font-style: italic; color: var(--wine); }
+
+.tribute-body {
+  font-family: var(--serif); font-size: clamp(19px, 2.8vw, 24px);
+  font-weight: 400; color: var(--ink-soft); line-height: 1.9; margin-bottom: 52px;
+}
+.tribute-body strong { font-weight: 600; color: var(--ink); }
+
+.qualities {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1px; background: rgba(160,120,32,0.2);
+  border: 1px solid rgba(160,120,32,0.2); margin-top: 52px;
+}
+.quality { background: var(--ivory); padding: 36px 24px; text-align: center; transition: background .3s; }
+.quality:hover { background: rgba(160,120,32,0.05); }
+.q-icon { font-size: 28px; display: block; margin-bottom: 14px; }
+.q-title { font-family: var(--serif); font-size: 21px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+.q-desc { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ink-soft); line-height: 1.7; }
+
+/* ──────────────────────────────
+   LETTERS
+────────────────────────────── */
+.letters-section { padding: 96px 32px; background: var(--cream); }
+.letters-inner { max-width: 980px; margin: 0 auto; }
+
+.letters-intro {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(17px, 2.5vw, 20px); color: var(--ink-soft);
+  text-align: center; line-height: 1.75; margin-bottom: 60px;
+}
+
+.letters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 20px;
+}
+
+.letter-card { position: relative; }
+
+.env-face {
+  background: var(--ivory);
+  border: 1px solid rgba(160,120,32,0.28);
+  padding: 40px 28px 36px; text-align: center;
+  position: relative; transition: box-shadow .35s, transform .35s; cursor: pointer;
+}
+.env-face::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold-lt), transparent);
+}
+.letter-card:hover .env-face { transform: translateY(-5px); box-shadow: 0 18px 44px rgba(24,18,12,0.12); }
+.letter-card.is-open .env-face { display: none; }
+
+.wax-seal {
+  width: 50px; height: 50px; border-radius: 50%;
+  background: var(--wine); display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 20px; color: rgba(255,255,255,0.9);
+  box-shadow: 0 3px 14px rgba(92,31,46,0.35);
+}
+.env-from { font-family: var(--sans); font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.env-name { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--ink); margin-bottom: 16px; }
+.env-hint { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 24px; }
+.open-btn {
+  font-family: var(--sans); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--wine); border: 1.5px solid rgba(92,31,46,0.4);
+  padding: 12px 28px; background: transparent; cursor: pointer; transition: all .3s;
+}
+.open-btn:hover { background: var(--wine); color: #fff; border-color: var(--wine); }
+
+.letter-body {
+  display: none; background: var(--ivory);
+  border: 1px solid rgba(160,120,32,0.28);
+  padding: 38px 32px; position: relative;
+  animation: letterOpen .55s ease forwards;
+}
+@keyframes letterOpen {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.letter-body::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold-lt), transparent);
+}
+.letter-card.is-open .letter-body { display: block; }
+
+.letter-header {
+  display: flex; align-items: center; gap: 14px;
+  padding-bottom: 20px; margin-bottom: 24px;
+  border-bottom: 1px solid rgba(160,120,32,0.18);
+}
+.header-seal {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--wine);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: rgba(255,255,255,0.9); flex-shrink: 0;
+}
+.header-name { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--ink); }
+.header-rel { font-family: var(--sans); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+.letter-text {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(17px, 2.5vw, 20px); color: var(--ink-soft); line-height: 1.9; margin-bottom: 24px;
+}
+.letter-sig { font-family: var(--serif); font-size: 17px; color: var(--wine); text-align: right; font-style: italic; }
+.close-btn {
+  position: absolute; top: 14px; right: 18px;
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(24,18,12,0.4); background: none; border: none; cursor: pointer; transition: color .2s;
+}
+.close-btn:hover { color: var(--wine); }
+
+/* ──────────────────────────────
+   PERSONAL TRIBUTE
+────────────────────────────── */
+.personal { padding: 96px 32px; background: var(--ivory); }
+.personal-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+
+.big-quote {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(22px, 4vw, 32px); font-weight: 400;
+  color: var(--ink); line-height: 1.7; margin: 36px 0; padding: 0 16px; position: relative;
+}
+.big-quote::before {
+  content: '\201C'; position: absolute; top: -24px; left: 0;
+  font-size: 90px; color: rgba(160,120,32,0.15); font-family: var(--serif); line-height: 1;
+}
+.personal-body {
+  font-family: var(--serif); font-size: clamp(18px, 2.6vw, 22px);
+  font-weight: 400; color: var(--ink-soft); line-height: 1.9; margin-bottom: 40px;
+}
+
+/* ──────────────────────────────
+   BLESSING
+────────────────────────────── */
+.blessing {
+  padding: 96px 32px 112px; text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(58,80,64,0.08) 0%, transparent 60%),
+    var(--cream);
+}
+.blessing-inner { max-width: 660px; margin: 0 auto; }
+
+.blessing-text {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(20px, 3vw, 26px); font-weight: 400;
+  color: var(--ink-soft); line-height: 2.05; margin: 40px 0 48px;
+}
+.blessing-text strong { font-style: normal; font-weight: 600; color: var(--ink); }
+
+.from-line {
+  font-family: var(--serif); font-style: italic;
+  font-size: 18px; color: var(--ink-soft); margin-top: 36px; line-height: 1.8;
+}
+.from-line strong { font-weight: 600; color: var(--wine); font-style: normal; }
+
+/* ──────────────────────────────
+   FOOTER
+────────────────────────────── */
+footer {
+  text-align: center; padding: 32px 24px 44px;
+  border-top: 1px solid rgba(160,120,32,0.15);
+}
+footer p {
+  font-family: var(--serif); font-style: italic;
+  font-size: 15px; color: rgba(24,18,12,0.45);
+}
+
+/* ──────────────────────────────
+   SCROLL REVEAL
+────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.d1 { transition-delay: .1s; }
+.d2 { transition-delay: .25s; }
+.d3 { transition-delay: .4s; }
+
+@keyframes up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ──────────────────────────────
+   MOBILE — LARGE, CLEAR, READABLE
+────────────────────────────── */
+@media (max-width: 768px) {
+  .cursor, .cursor-ring { display: none; }
+  body { cursor: auto; }
+
+  .hero { padding: 72px 24px; }
+  .hero::before { top: 16px; left: 16px; right: 16px; bottom: 16px; }
+  .hero-name { font-size: clamp(68px, 22vw, 100px); }
+  .hero-for { font-size: clamp(22px, 6vw, 28px); }
+  .hero-intro { font-size: clamp(20px, 5.5vw, 24px); line-height: 1.85; }
+  .hero-eyebrow, .hero-date { font-size: 13px; }
+
+  .tribute, .letters-section, .personal, .blessing { padding: 72px 20px; }
+
+  .section-title { font-size: clamp(36px, 9vw, 50px); }
+  .section-eyebrow { font-size: 13px; }
+  .tribute-body { font-size: clamp(20px, 5.5vw, 24px); line-height: 1.95; }
+
+  .qualities { grid-template-columns: 1fr 1fr; }
+  .q-title { font-size: 20px; }
+  .q-desc { font-size: 17px; line-height: 1.75; }
+
+  .letters-grid { grid-template-columns: 1fr; }
+  .letters-intro { font-size: clamp(18px, 5vw, 22px); }
+  .env-name { font-size: 28px; }
+  .env-hint { font-size: 18px; }
+  .open-btn { font-size: 14px; padding: 14px 30px; width: 100%; }
+  .letter-text { font-size: clamp(19px, 5vw, 23px); line-height: 1.95; }
+  .letter-sig { font-size: 19px; }
+  .header-name { font-size: 22px; }
+  .header-rel { font-size: 13px; }
+
+  .big-quote { font-size: clamp(22px, 6vw, 28px); }
+  .personal-body { font-size: clamp(19px, 5.5vw, 23px); line-height: 1.95; }
+  .blessing-text { font-size: clamp(20px, 5.5vw, 25px); line-height: 2.1; }
+  .from-line { font-size: 20px; }
+
+  footer p { font-size: 16px; }
+}
+
+@media (max-width: 420px) {
+  .hero-name { font-size: 19vw; }
+  .qualities { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <span class="hero-eyebrow">A Celebration of a Remarkable Woman</span>
+  <p class="hero-for">In honour of</p>
+  <h1 class="hero-name">Sweet <span>Mum</span></h1>
+  <div class="hero-date">A Milestone Birthday · March 11</div>
+  <div class="hero-divider"><div class="divider"><div class="diamond"></div></div></div>
+  <p class="hero-intro">
+    Some women do not simply live their years — they pour themselves into every single one,
+    leaving warmth, wisdom, and wonder in their wake. You are one of those women.
+    Today, your family celebrates all that you are.
+  </p>
+  <div class="scroll-hint">
+    <span>Scroll to begin</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- ═══ TRIBUTE ═══ -->
+<div class="tribute">
+  <div class="tribute-inner">
+    <span class="section-eyebrow reveal">Written for you</span>
+    <h2 class="section-title reveal d1">A woman like <em>no other.</em></h2>
+    <div class="divider reveal d2" style="margin-bottom:48px;"><div class="diamond"></div></div>
+    <p class="tribute-body reveal d2">
+      There is a kind of woman the world does not fully know how to describe —
+      one whose presence makes a home feel warmer, whose voice carries the weight
+      of a thousand quiet reassurances, whose love asks nothing and gives everything.
+      <br><br>
+      <strong>That is who you are.</strong> A mother, a pillar, a blessing wrapped in grace.
+      You have given this family more than you will ever know, and today,
+      on this milestone birthday, we want you to sit still for just a moment
+      and let yourself be celebrated.
+    </p>
+    <div class="divider reveal d3"><div class="diamond"></div></div>
+    <div class="qualities reveal d3">
+      <div class="quality">
+        <span class="q-icon">🌿</span>
+        <div class="q-title">Her Grace</div>
+        <p class="q-desc">She carries herself with a quiet dignity that commands respect without demanding it.</p>
+      </div>
+      <div class="quality">
+        <span class="q-icon">🕯️</span>
+        <div class="q-title">Her Warmth</div>
+        <p class="q-desc">Every room she enters becomes a little softer, a little safer, a little more like home.</p>
+      </div>
+      <div class="quality">
+        <span class="q-icon">🤲</span>
+        <div class="q-title">Her Giving</div>
+        <p class="q-desc">She gives before she is asked and loves before she is thanked. Always.</p>
+      </div>
+      <div class="quality">
+        <span class="q-icon">📖</span>
+        <div class="q-title">Her Wisdom</div>
+        <p class="q-desc">Her words carry the kind of truth that stays with you long after the conversation ends.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LETTERS ═══ -->
+<div class="letters-section">
+  <div class="letters-inner">
+    <span class="section-eyebrow reveal">Letters to Sweet Mum</span>
+    <h2 class="section-title reveal d1">Sealed with love,<br><em>from your children.</em></h2>
+    <p class="letters-intro reveal d2">Each one has something to say to you.<br>Tap a letter to open it.</p>
+    <div class="letters-grid">
+
+      <!-- Wale -->
+      <div class="letter-card" id="card-1">
+        <div class="env-face" onclick="openLetter('card-1')">
+          <div class="wax-seal">✦</div>
+          <div class="env-from">A letter from</div>
+          <div class="env-name">Wale</div>
+          <div class="env-hint">Your child has something<br>they have been holding.</div>
+          <button class="open-btn">Open letter</button>
+        </div>
+        <div class="letter-body">
+          <button class="close-btn" onclick="closeLetter('card-1')">Close ✕</button>
+          <div class="letter-header">
+            <div class="header-seal">✦</div>
+            <div><div class="header-name">Wale</div><div class="header-rel">Your Child</div></div>
+          </div>
+          <p class="letter-text">"Mum, I do not say it enough — but every good thing in me started with you. The way you raised me, loved me, and believed in me even when I could not believe in myself is something I carry every single day. On this birthday, I want you to know that being your child is one of the greatest honours of my life. I love you more than words can hold."</p>
+          <p class="letter-sig">With all my love, Wale ♥</p>
+        </div>
+      </div>
+
+      <!-- Arike -->
+      <div class="letter-card" id="card-2">
+        <div class="env-face" onclick="openLetter('card-2')">
+          <div class="wax-seal">❧</div>
+          <div class="env-from">A letter from</div>
+          <div class="env-name">Arike</div>
+          <div class="env-hint">She wrote this one<br>just for you, Mum.</div>
+          <button class="open-btn">Open letter</button>
+        </div>
+        <div class="letter-body">
+          <button class="close-btn" onclick="closeLetter('card-2')">Close ✕</button>
+          <div class="letter-header">
+            <div class="header-seal">❧</div>
+            <div><div class="header-name">Arike</div><div class="header-rel">Your Child</div></div>
+          </div>
+          <p class="letter-text">"There is nobody quite like you, Mum. Nobody who makes me feel as safe, as seen, as loved. You have been my constant through every season, every difficulty, every joy. On this special birthday I want you to know that I am so proud of everything you are, and grateful every single day that I get to call you my mother."</p>
+          <p class="letter-sig">Forever yours, Arike ♥</p>
+        </div>
+      </div>
+
+      <!-- Timileyin -->
+      <div class="letter-card" id="card-3">
+        <div class="env-face" onclick="openLetter('card-3')">
+          <div class="wax-seal">✿</div>
+          <div class="env-from">A letter from</div>
+          <div class="env-name">Timileyin</div>
+          <div class="env-hint">A message written with<br>a full heart, just for you.</div>
+          <button class="open-btn">Open letter</button>
+        </div>
+        <div class="letter-body">
+          <button class="close-btn" onclick="closeLetter('card-3')">Close ✕</button>
+          <div class="letter-header">
+            <div class="header-seal">✿</div>
+            <div><div class="header-name">Timileyin</div><div class="header-rel">Your Child</div></div>
+          </div>
+          <p class="letter-text">"Mum, watching you move through life with such grace and strength has taught me more than any lesson ever could. You are the kind of woman I look up to — gentle but unbreakable, quiet but deeply powerful. May this birthday bring you even a fraction of the joy you have always given us. We love you endlessly."</p>
+          <p class="letter-sig">With deep love, Timileyin ♥</p>
+        </div>
+      </div>
+
+      <!-- Opeyemi -->
+      <div class="letter-card" id="card-4">
+        <div class="env-face" onclick="openLetter('card-4')">
+          <div class="wax-seal">◈</div>
+          <div class="env-from">A letter from</div>
+          <div class="env-name">Opeyemi</div>
+          <div class="env-hint">Something from the heart,<br>sealed with love.</div>
+          <button class="open-btn">Open letter</button>
+        </div>
+        <div class="letter-body">
+          <button class="close-btn" onclick="closeLetter('card-4')">Close ✕</button>
+          <div class="letter-header">
+            <div class="header-seal">◈</div>
+            <div><div class="header-name">Opeyemi</div><div class="header-rel">Your Child</div></div>
+          </div>
+          <p class="letter-text">"Mum, you have always been the steady heartbeat of this family — the one we run to, the one we lean on, the one who always knows what to say. Thank you for showing us what it looks like to love with everything you have. On this big birthday, know that you are celebrated, cherished, and deeply adored."</p>
+          <p class="letter-sig">All my love, Opeyemi ♥</p>
+        </div>
+      </div>
+
+      <!-- Toyosi -->
+      <div class="letter-card" id="card-5">
+        <div class="env-face" onclick="openLetter('card-5')">
+          <div class="wax-seal">♥</div>
+          <div class="env-from">A letter from</div>
+          <div class="env-name">Toyosi</div>
+          <div class="env-hint">Your last born saved<br>the final letter for you.</div>
+          <button class="open-btn">Open letter</button>
+        </div>
+        <div class="letter-body">
+          <button class="close-btn" onclick="closeLetter('card-5')">Close ✕</button>
+          <div class="letter-header">
+            <div class="header-seal">♥</div>
+            <div><div class="header-name">Toyosi</div><div class="header-rel">Your Child</div></div>
+          </div>
+          <p class="letter-text">"Sweet Mum, you are everything. Everything good in this home, everything warm in our memories, everything strong in how we were raised — that is all you. I am so grateful to be yours. Happy birthday to the most beautiful, most wonderful, most irreplaceable woman I know. I love you so much it is hard to put into words."</p>
+          <p class="letter-sig">Your Toyosi ♥</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PERSONAL TRIBUTE ═══ -->
+<div class="personal">
+  <div class="personal-inner">
+    <span class="section-eyebrow reveal">A personal word</span>
+    <h2 class="section-title reveal d1">What you mean<br><em>to this family.</em></h2>
+    <div class="divider reveal d2" style="margin: 24px auto 0;"><div class="diamond"></div></div>
+    <blockquote class="big-quote reveal d2">
+      The older we grow, the more clearly we see just how much you poured into us —
+      quietly, faithfully, without ever asking for anything in return.
+    </blockquote>
+    <p class="personal-body reveal d3">
+      A mother's love is the kind that never announces itself. It shows up in early mornings
+      and late nights, in stern words that were secretly prayers, in a look that said
+      "I believe in you" before you believed in yourself.
+      <br><br>
+      That is the love you gave us. Every single day. And on this milestone birthday,
+      we want you to know that it did not go unnoticed. Not a single moment of it.
+    </p>
+    <div class="divider reveal d3"><div class="diamond"></div></div>
+  </div>
+</div>
+
+<!-- ═══ BLESSING ═══ -->
+<div class="blessing">
+  <div class="blessing-inner">
+    <span class="section-eyebrow reveal">A prayer for you</span>
+    <h2 class="section-title reveal d1">May this chapter be<br><em>your most beautiful yet.</em></h2>
+    <div class="divider reveal d2" style="margin: 24px auto;"><div class="diamond"></div></div>
+    <p class="blessing-text reveal d2">
+      May you be granted <strong>long life</strong> filled with ease, laughter, and deep joy.<br>
+      May you always be surrounded by people who love you as deeply as you deserve.<br>
+      May every prayer you have ever whispered on our behalf<br>
+      return to you as blessings multiplied beyond measure.<br><br>
+      May you never know sorrow without relief,<br>
+      never carry a burden without someone beside you,<br>
+      and never go a single day without knowing<br>
+      <strong>how deeply, how completely, how endlessly you are loved.</strong>
+    </p>
+    <div class="divider reveal d3"><div class="diamond"></div></div>
+    <p class="from-line reveal d3">
+      With all the love we have —<br>
+      <strong>Wale, Arike, Timileyin, Opeyemi &amp; Toyosi ♥</strong>
+    </p>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>Made with love by your children · March 11 · A milestone worth celebrating forever</p>
+</footer>
+
+<script>
+  // ── CURSOR ──
+  const cur  = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cur.style.left  = e.clientX + 'px';
+    cur.style.top   = e.clientY + 'px';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top  = e.clientY + 'px';
+  });
+
+  // ── SCROLL REVEAL ──
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ── LETTERS ──
+  function openLetter(id) {
+    document.getElementById(id).classList.add('is-open');
+    setTimeout(() => {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }
+  function closeLetter(id) {
+    document.getElementById(id).classList.remove('is-open');
+  }
+</script>
+</body>
+</html>
